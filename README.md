@@ -1,0 +1,2 @@
+# trading-scanner
+Marketing analysis
