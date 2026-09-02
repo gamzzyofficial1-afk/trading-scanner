@@ -16,7 +16,35 @@ app.get("/health", async () => {
   };
 });
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 3000;app.post("/scan", async (request, reply) => {
+  try {
+    const body = request.body as {
+      symbol?: string;
+      timeframe?: string;
+      limit?: number;
+    };
+
+    if (!body.symbol || !body.timeframe) {
+      return reply.code(400).send({
+        error: "symbol and timeframe are required",
+      });
+    }
+
+    const result = await analyze({
+      symbol: body.symbol,
+      timeframe: body.timeframe,
+      limit: body.limit,
+    });
+
+    return reply.send(result);
+  } catch (error) {
+    app.log.error(error);
+
+    return reply.code(500).send({
+      error: "Scan failed",
+    });
+  }
+});
 
 app.listen({
   port: PORT,
