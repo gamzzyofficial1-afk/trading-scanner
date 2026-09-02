@@ -1,6 +1,6 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-
+import { analyze } from "@scanner/analysis";
 const app = Fastify({
   logger: true,
 });
