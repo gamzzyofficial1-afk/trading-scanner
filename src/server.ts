@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { analyze } from "@scanner/analysis";
+
 const app = Fastify({
   logger: true,
 });
@@ -16,7 +17,7 @@ app.get("/health", async () => {
   };
 });
 
-const PORT = Number(process.env.PORT) || 3000;app.post("/scan", async (request, reply) => {
+app.post("/scan", async (request, reply) => {
   try {
     const body = request.body as {
       symbol?: string;
@@ -45,6 +46,8 @@ const PORT = Number(process.env.PORT) || 3000;app.post("/scan", async (request, 
     });
   }
 });
+
+const PORT = Number(process.env.PORT) || 3000;
 
 app.listen({
   port: PORT,
